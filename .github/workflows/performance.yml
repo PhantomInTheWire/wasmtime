@@ -10,6 +10,12 @@ on:
   issue_comment:
     types: [created]
   push:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: "Branch to benchmark (wasmtime)"
+        required: true
+        default: "main"
 
 # Env variables
 env:
@@ -35,6 +41,7 @@ jobs:
         || ('fitzgen' == github.event.comment.user.login)
         || ('jameysharp' == github.event.comment.user.login)
         || ('jlb6740' == github.event.comment.user.login)
+        || ('PhantomInTheWire' == github.event.comment.user.login)
         || ('sparker-arm' == github.event.comment.user.login)
         || ('uweigand' == github.event.comment.user.login))
     steps:
@@ -91,8 +98,8 @@ jobs:
       - name: Checkout main from bytecodealliance/wasmtime
         uses: actions/checkout@v4
         with:
-          ref: 'main'
-          repository: 'bytecodealliance/wasmtime'
+          ref: "main"
+          repository: "bytecodealliance/wasmtime"
           submodules: true
           path: wasmtime_main
 
@@ -119,11 +126,11 @@ jobs:
       - id: get-comment-body
         name: Create Results Body
         run: |
-            body="$(cat /tmp/results.txt)"
-            body="${body//'%'/'%25'}"
-            body="${body//$'\n'/'%0A'}"
-            body="${body//$'\r'/'%0D'}"
-            echo "::set-output name=body::$body"
+          body="$(cat /tmp/results.txt)"
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}"
+          echo "::set-output name=body::$body"
 
       - name: Publish Results
         run: |
@@ -131,3 +138,61 @@ jobs:
           -H "Authorization: token ${{ secrets.WASMTIME_PUBLISHING_TOKEN }}" \
           ${{ github.event.head_commit.message }} \
           -d '{"body": ${{ toJSON(steps.get-comment-body.outputs.body) }}}'
+
+  Manual_Performance_Run:
+    name: Benchmark x64 on manual dispatch
+    runs-on: [self-hosted, linux, x64]
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Setup
+        run: echo "Running benchmark for wasmtime branch '${{ github.event.inputs.target_branch }}'"
+
+      - name: Build sightglass commit '${{ env.SG_COMMIT }}'
+        run: |
+          cd ../ && ls -l && rm -rf ./sightglass
+          git clone https://github.com/bytecodealliance/sightglass.git && cd ./sightglass
+          git checkout ${{ env.SG_COMMIT }}
+          cargo build --release
+
+      - name: Checkout target branch from wasmtime
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.target_branch }}
+          repository: bytecodealliance/wasmtime
+          submodules: true
+          path: wasmtime_target
+
+      - name: Build target branch
+        working-directory: ./wasmtime_target
+        run: |
+          rustup update nightly && rustup default nightly
+          cargo build --release -p wasmtime-bench-api
+          cp target/release/libwasmtime_bench_api.so /tmp/wasmtime_target.so
+
+      - name: Checkout main branch from wasmtime
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          repository: bytecodealliance/wasmtime
+          submodules: true
+          path: wasmtime_main
+
+      - name: Build main branch
+        working-directory: ./wasmtime_main
+        run: |
+          cargo build --release -p wasmtime-bench-api
+          cp target/release/libwasmtime_bench_api.so /tmp/wasmtime_main.so
+
+      - name: Run performance tests
+        working-directory: ./sightglass
+        run: |
+          cargo run -- \
+          benchmark \
+          --processes 5 \
+          --iterations-per-process 5 \
+          --engine /tmp/wasmtime_main.so \
+          --engine /tmp/wasmtime_target.so \
+          --output-file /tmp/results.txt
+
+      - name: Print Results
+        run: cat /tmp/results.txt
