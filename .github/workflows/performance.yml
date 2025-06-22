@@ -141,7 +141,7 @@ jobs:
 
   Manual_Performance_Run:
     name: Benchmark x64 on manual dispatch
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Setup
