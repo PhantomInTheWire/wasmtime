@@ -157,8 +157,7 @@ jobs:
       - name: Checkout target branch from wasmtime
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.target_branch }}
-          repository: bytecodealliance/wasmtime
+          ref: main
           submodules: true
           path: wasmtime_target
 
