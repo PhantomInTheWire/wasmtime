@@ -14,24 +14,24 @@ block0(v0: i128):
 ;   movq %rsp, %rbp
 ; block0:
 ;   movq %rdi, %r8
-;   movabsq $-1, %rcx
+;   movq $0xffffffffffffffff, %rcx
 ;   bsrq %rsi, %r9
-;   cmovzq  %rcx, %r9, %r9
-;   movl    $63, %edi
+;   cmoveq %rcx, %r9
+;   movl $0x3f, %edi
 ;   subq %r9, %rdi
-;   movabsq $-1, %rdx
+;   movq $0xffffffffffffffff, %rdx
 ;   bsrq %r8, %r10
-;   cmovzq  %rdx, %r10, %r10
-;   movl    $63, %eax
+;   cmoveq %rdx, %r10
+;   movl $0x3f, %eax
 ;   subq %r10, %rax
 ;   addq $0x40, %rax
-;   cmpq    $64, %rdi
-;   cmovnzq %rdi, %rax, %rax
+;   cmpq $0x40, %rdi
+;   cmovneq %rdi, %rax
 ;   uninit  %rdx
 ;   xorq %rdx, %rdx
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -67,14 +67,14 @@ block0(v0: i64):
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block0:
-;   movabsq $-1, %rax
+;   movq $0xffffffffffffffff, %rax
 ;   bsrq %rdi, %r8
-;   cmovzq  %rax, %r8, %r8
-;   movl    $63, %eax
+;   cmoveq %rax, %r8
+;   movl $0x3f, %eax
 ;   subq %r8, %rax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -100,14 +100,14 @@ block0(v0: i32):
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block0:
-;   movabsq $-1, %rax
+;   movq $0xffffffffffffffff, %rax
 ;   bsrl %edi, %r8d
-;   cmovzl  %eax, %r8d, %r8d
-;   movl    $31, %eax
+;   cmovel %eax, %r8d
+;   movl $0x1f, %eax
 ;   subl %r8d, %eax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -134,15 +134,15 @@ block0(v0: i16):
 ;   movq %rsp, %rbp
 ; block0:
 ;   movzwq %di, %rax
-;   movabsq $-1, %rdx
+;   movq $0xffffffffffffffff, %rdx
 ;   bsrq %rax, %r10
-;   cmovzq  %rdx, %r10, %r10
-;   movl    $63, %eax
+;   cmoveq %rdx, %r10
+;   movl $0x3f, %eax
 ;   subq %r10, %rax
 ;   subq $0x30, %rax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -171,15 +171,15 @@ block0(v0: i8):
 ;   movq %rsp, %rbp
 ; block0:
 ;   movzbq %dil, %rax
-;   movabsq $-1, %rdx
+;   movq $0xffffffffffffffff, %rdx
 ;   bsrq %rax, %r10
-;   cmovzq  %rdx, %r10, %r10
-;   movl    $63, %eax
+;   cmoveq %rdx, %r10
+;   movl $0x3f, %eax
 ;   subq %r10, %rax
 ;   subq $0x38, %rax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0

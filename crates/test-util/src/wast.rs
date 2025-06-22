@@ -72,6 +72,7 @@ fn add_tests(tests: &mut Vec<WastTest>, path: &Path, has_config: bool) -> Result
 
 fn spec_test_config(test: &Path) -> TestConfig {
     let mut ret = TestConfig::default();
+    ret.spec_test = Some(true);
     match spec_proposal_from_path(test) {
         Some("multi-memory") => {
             ret.multi_memory = Some(true);
@@ -244,11 +245,13 @@ macro_rules! foreach_config_option {
             component_model_async_builtins
             component_model_async_stackful
             component_model_error_context
+            component_model_gc
             simd
             gc_types
             exceptions
             legacy_exceptions
             stack_switching
+            spec_test
         }
     };
 }
@@ -270,7 +273,6 @@ macro_rules! define_test_config {
                 }
             )*
         }
-
     }
 }
 
@@ -359,7 +361,10 @@ impl Compiler {
                 }
 
                 if cfg!(target_arch = "aarch64") {
-                    return unsupported_base || config.wide_arithmetic() || config.threads();
+                    return unsupported_base
+                        || config.wide_arithmetic()
+                        || (config.simd() && !config.spec_test())
+                        || config.threads();
                 }
 
                 false

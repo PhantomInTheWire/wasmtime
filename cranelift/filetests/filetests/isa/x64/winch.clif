@@ -13,7 +13,7 @@ block0:
 ; block0:
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -45,7 +45,7 @@ block0(v0:i64, v1:i64, v2:i64, v3:i64, v4:i64, v5:i64):
 ;   addq $0x10, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -93,7 +93,7 @@ block0(v0:i64, v1:i64, v2:i64, v3:i64, v4:i64, v5:i64):
 ;   addq $0x40, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -140,7 +140,7 @@ block0(v0:i64, v1:i64, v2:i64, v3:i64, v4:i64, v5:i64):
 ;   call    *%r10
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -188,7 +188,7 @@ block0(v0:i64, v1:i64, v2:i64, v3:i64, v4:i64, v5:i64):
 ;   addq $0x30, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -250,7 +250,7 @@ block0:
 ;   addq $0x40, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -298,7 +298,7 @@ block0(v0:i64):
 ;   movq %r14, 0x38(%rsp)
 ;   movq %r15, 0x40(%rsp)
 ; block0:
-;   lea     0(%rsp), %rdi
+;   leaq (%rsp), %rdi
 ;   load_ext_name %g+0, %r10
 ;   call    *%r10
 ;   movq <offset:1>+(%rsp), %rax
@@ -312,7 +312,7 @@ block0(v0:i64):
 ;   addq $0x50, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -360,7 +360,7 @@ block0(v0: i32, v1: i64, v2: i32, v3: i64):
 ;   movq %rsi, %rax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -387,16 +387,16 @@ block0:
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block0:
-;   movl    $-56798, %r11d
-;   movl    $85, %r9d
-;   movl    $11, %r10d
+;   movl $0xffff2222, %r11d
+;   movl $0x55, %r9d
+;   movl $0xb, %r10d
 ;   movq %r11, 8(%rdi)
 ;   movzbq %r9b, %r11
 ;   movq %r9, (%rdi)
 ;   movzbq %r10b, %rax
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -426,14 +426,14 @@ block0:
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block0:
-;   movl    $-56798, %edx
-;   movl    $85, %r8d
-;   movl    $11, %eax
+;   movl $0xffff2222, %edx
+;   movl $0x55, %r8d
+;   movl $0xb, %eax
 ;   movq %rdx, 1(%rdi)
 ;   movb %r8b, (%rdi)
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0

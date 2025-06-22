@@ -18,7 +18,7 @@ block0(v0: f32):
 ;   cvtss2sd %xmm7, %xmm0
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -49,7 +49,7 @@ block0(v1: i64, v2: f32):
 ;   movq %rsp, %rbp
 ;   subq $0x10, %rsp
 ; block0:
-;   lea     rsp(0 + virtual offset), %r8
+;   leaq <offset:1>+(%rsp), %r8
 ;   movss %xmm0, (%r8)
 ;   uninit  %xmm0
 ;   xorpd %xmm0, %xmm0
@@ -57,7 +57,7 @@ block0(v1: i64, v2: f32):
 ;   addq $0x10, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -91,7 +91,7 @@ block0(v0: f64):
 ;   cvtsd2ss %xmm7, %xmm0
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
@@ -122,7 +122,7 @@ block0(v1: i64, v2: f64):
 ;   movq %rsp, %rbp
 ;   subq $0x10, %rsp
 ; block0:
-;   lea     rsp(0 + virtual offset), %r8
+;   leaq <offset:1>+(%rsp), %r8
 ;   movsd %xmm0, (%r8)
 ;   uninit  %xmm0
 ;   xorps %xmm0, %xmm0
@@ -130,7 +130,7 @@ block0(v1: i64, v2: f64):
 ;   addq $0x10, %rsp
 ;   movq %rbp, %rsp
 ;   popq %rbp
-;   ret
+;   retq
 ;
 ; Disassembled:
 ; block0: ; offset 0x0
