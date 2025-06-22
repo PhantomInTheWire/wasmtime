@@ -157,7 +157,7 @@ jobs:
       - name: Checkout target branch from wasmtime
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: feat/use-dominator-tree-preorder
           repository: PhantomInTheWire/wasmtime
           submodules: true
           path: wasmtime_target
