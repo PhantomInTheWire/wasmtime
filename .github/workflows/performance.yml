@@ -184,7 +184,7 @@ jobs:
           cp target/release/libwasmtime_bench_api.so /tmp/wasmtime_main.so
 
       - name: Run performance tests
-        working-directory: ./sightglass
+        working-directory: ../sightglass
         run: |
           cargo run -- \
           benchmark \
